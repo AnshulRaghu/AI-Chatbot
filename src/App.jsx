@@ -7,7 +7,6 @@ import { AuthProvider, ProtectedRoute } from './components/Auth/AuthProvider';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ManageProfile from './components/Account/ManageProfile';
 
-
 function App() {
   return (
     <Router>
