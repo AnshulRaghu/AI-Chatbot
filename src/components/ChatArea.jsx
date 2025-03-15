@@ -174,16 +174,42 @@ function ChatArea({
   };
 
   // ********** WRITE the GENERATE PLAYLIST FUNCTION BELOW ************
-
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_APE_KEY);
   const generatePlaylist = async (userMessage) => {
     try {
       // ***** use the gemini api below*******
       
-      
-      // change the json file into 
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+      console.log('Attempting API call...');
+      const prompt = `Act as a music expert.
+                  Create a playlist for this request: ${userMessage}.
+                  Return exactly a valid JSON array in this format:
+                  [{"title": "Song Name","artist":"Artist Name"}]
+                  No code blocks, no extra text. Just the JSON array.
+                  Minimum 5 songs, maximum 10.`;
+      const result=await model.generateContent({
+        contents: [{role:"user", parts: [{ text: prompt}] }]
+      });
+      const response = await result.response;
+      const botResponse = response.text();
+
+      console.log('API Response: botResponse');
+
+      const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+      // const genAI = new GoogleGenerativeAI(AIzaSyDFHAToO1eYEXKD98y4txyodbdXizTIDn0);
+      // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      // const prompt = "Explain how AI works";
+
+      // const result = await model.generateContent(prompt);
+      // console.log(result.response.text());
+
+      // change the json file into
       try {
         // Removes any JSON code block formatting from the bot's response.
-        const cleanedResponse = botResponse.replace(/```json\n?|\n?```/g, '').trim();
+        const cleanedResponse = JSON.parse(botResponse.trim())
         // Parses the cleaned response string into a JavaScript object or array.
         const playlistData = JSON.parse(cleanedResponse);
         // Checks if the parsed data is an array and has at least one item.
