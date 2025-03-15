@@ -198,14 +198,6 @@ function ChatArea({
 
       const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-      // const genAI = new GoogleGenerativeAI(AIzaSyDFHAToO1eYEXKD98y4txyodbdXizTIDn0);
-      // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-      // const prompt = "Explain how AI works";
-
-      // const result = await model.generateContent(prompt);
-      // console.log(result.response.text());
-
       // change the json file into
       try {
         // Removes any JSON code block formatting from the bot's response.
